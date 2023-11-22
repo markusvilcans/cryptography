@@ -8,8 +8,12 @@ body {
     background-size: cover;
     min-height: 100vh;
     font-family: 'Noto Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
 }
-
 
 
 .text-center {
@@ -31,6 +35,7 @@ body {
     border-radius: 3px;
     padding: 70px 100px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    text-align: center;
 
 }
 
@@ -82,7 +87,9 @@ body {
 
 .flex-container {
     display: flex;
-    justify-content: space-around; /* Adjust as needed */
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 
 
