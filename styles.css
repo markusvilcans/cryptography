@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i&subset=greek-ext');
 
 body {
-    background-image: url("https://images.pexels.com/photos/891252/pexels-photo-891252.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+    background-image: url("https://manybackgrounds.com/images/hd/starry-night-sky-dark-aesthetic-ro6a8cda8gg0zoil.jpg");
     background-position: center;
     background-origin: content-box;
     background-repeat: no-repeat;
@@ -13,10 +13,11 @@ body {
 .text-center {
     color: #fff;
     text-transform: uppercase;
-    font-size: 23px;
+    font-size: 40px;
     margin: -50px 0 80px 0;
     display: block;
     text-align: center;
+    overflow-wrap: normal;
 }
 
 .box {
@@ -27,11 +28,14 @@ body {
     background-color: rgba(0, 0, 0, 0.89);
     border-radius: 3px;
     padding: 70px 100px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+
 }
 
 .input-container {
     position: relative;
     margin-bottom: 25px;
+   
 }
 
     .input-container label {
@@ -73,6 +77,31 @@ body {
     cursor: pointer;
     position: relative;
 }
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .button-container a {
+        color: #fff;
+        background-color: #e74c3c;
+        outline: none;
+        border: 0;
+        color: #fff;
+        padding: 15px 30px;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        border-radius: 2px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 25px;
+    }
+
+        .button-container a:hover {
+            background-color: #c0392b;
+        }
+
 /*.btn:after{
 	content:"";
 	position:absolute;
