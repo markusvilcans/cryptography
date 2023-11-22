@@ -10,14 +10,26 @@
 </head>
 <body>
     <main>
-        <div class="box">
-            <form>
-                <span class="text-center">CRYPT YOUR DARKEST SECRETS</span>
-                <div class="button-container">
-                    <a href="encrypt.html" class="btn">Encrypt</a>
-                    <a href="decrypt.html" class="btn">Decrypt</a>
-                </div>
-            </form>
+        <div class="flex-container">
+            <div class="box">
+                <form>
+                    <span class="text-center">CRYPT YOUR DARKEST SECRETS</span>
+                    <div class="input-container">
+                        <input type="text" required="" />
+                        <label>Enter cypher text</label>
+                    </div>
+                    <div class="input-container">
+                        <input type="text" required="" />
+                        <label>Enter crypt key</label>
+                    </div>
+                    <div class="input-container">
+                        <output type="text" required="" />
+                        <label>Output is here </label>
+                    </div>
+                    <button type="button" class="btn">cypher</button>
+                    <button type="button" class="btn">de-cypher</button>
+                </form>
+            </div>
         </div>
     </main>
 </body>

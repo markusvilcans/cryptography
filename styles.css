@@ -10,6 +10,8 @@ body {
     font-family: 'Noto Sans', sans-serif;
 }
 
+
+
 .text-center {
     color: #fff;
     text-transform: uppercase;
@@ -77,6 +79,12 @@ body {
     cursor: pointer;
     position: relative;
 }
+
+.flex-container {
+    display: flex;
+    justify-content: space-around; /* Adjust as needed */
+}
+
 
 .button-container {
     display: flex;
