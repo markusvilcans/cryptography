@@ -22,17 +22,49 @@
                         <input type="text" required="" />
                         <label>Enter crypt key</label>
                     </div>
-
-                    <button type="button" class="btn">cypher</button>
-                    <button type="button" class="btn">de-cypher</button>
-
-                    <div class="input-container">
-                        <output type="text" required="" />
-                        <label>Output go here here yesOutput go here here yesOutput go here here yesOutput go here here yesOutput go here here yesOutput go here here yesOutput go here here yesOutput go here here yesOutput go here here yesOutput go here here yesOutput go here here yesOutput go here here yesOutput go here here yesOutput go here here yesOutput go here here yes</label>
+                    <div>
+                        <button type="button" class="btn" onclick="cypher()">Cypher</button>
+                        <button type="button" class="btn" onclick="decypher()">Decypher</button>
                     </div>
+                    
+                    <button type="button" class="btn" onclick="copyOutput()">Copy</button>
+                    <div class="input-container">
+
+                        <output type="text" required="" id="outputText" onclick="selectText(this)" />
+                        <label>Output goes here</label>
+
+                    </div>
+
                 </form>
             </div>
         </div>
+
+        <script>
+            function cypher() {
+            var outputText = document.getElementById("outputText");
+            outputText.value = "Cyphered text";
+            }
+
+            function decypher() {
+            var outputText = document.getElementById("outputText");
+            outputText.value = "Decyphered text";
+            }
+
+            function selectText(element) {
+            var selection = window.getSelection();
+            var range = document.createRange();
+            range.selectNodeContents(element);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            }
+
+            function copyOutput() {
+            var outputText = document.getElementById("outputText");
+            selectText(outputText);
+            document.execCommand("copy");
+           
+            }
+        </script>
     </main>
 </body>
 </html>
