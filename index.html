@@ -10,60 +10,102 @@
 </head>
 <body>
     <main>
-        <div class="flex-container">
+        <div class="container">
             <div class="box">
                 <form>
                     <span class="text-center">CRYPT YOUR DARKEST SECRETS</span>
-                    <div class="input-container">
-                        <input type="text" required="" />
-                        <label>Enter cypher text</label>
+                    <div class="input-container" id="inputContainer">
+                        <textarea id="inputText" required="" placeholder="Enter cypher text"></textarea>
                     </div>
                     <div class="input-container">
-                        <input type="text" required="" />
-                        <label>Enter crypt key</label>
+                        <textarea id="key" required="" placeholder="Enter secret key"></textarea>
                     </div>
                     <div>
-                        <button type="button" class="btn" onclick="cypher()">Cypher</button>
-                        <button type="button" class="btn" onclick="decypher()">Decypher</button>
+                        <button type="button" class="btn" onclick="encryptMessage()">Encrypt</button>
+                        <button type="button" class="btn" onclick="decryptMessage()">Decrypt</button>
                     </div>
-                    
-                    <button type="button" class="btn" onclick="copyOutput()">Copy</button>
                     <div class="input-container">
-
-                        <output type="text" required="" id="outputText" onclick="selectText(this)" />
-                        <label>Output goes here</label>
-
+                        <textarea id="outputText" readonly required="" placeholder="Output" onclick="selectText(this)"></textarea>
                     </div>
-
+                    <button type="button" class="btn" onclick="copyOutput()">Copy</button>
                 </form>
             </div>
         </div>
 
         <script>
-            function cypher() {
-            var outputText = document.getElementById("outputText");
-            outputText.value = "Cyphered text";
+            async function encryptMessage() {
+                const plaintext = document.getElementById("inputText").value;
+                const key = document.getElementById("key").value;
+
+                try {
+                    const response = await fetch('http://127.0.0.1:8000/encrypt', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            key: key,
+                            text: plaintext,
+                        }),
+                    });
+
+                    const data = await response.json();
+                    document.getElementById('outputText').value = data.value;
+                } catch (error) {
+                    console.error('Error encrypting message:', error);
+                }
             }
 
-            function decypher() {
-            var outputText = document.getElementById("outputText");
-            outputText.value = "Decyphered text";
+            async function decryptMessage() {
+                const ciphertext = document.getElementById("inputText").value;
+                const key = document.getElementById("key").value;
+
+                try {
+                    const response = await fetch('http://127.0.0.1:8000/decrypt', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            key: key,
+                            text: ciphertext,
+                        }),
+                    });
+
+                    const data = await response.json();
+                    document.getElementById('outputText').value = data.value;
+                } catch (error) {
+                    console.error('Error decrypting message:', error);
+                }
             }
 
             function selectText(element) {
-            var selection = window.getSelection();
-            var range = document.createRange();
-            range.selectNodeContents(element);
-            selection.removeAllRanges();
-            selection.addRange(range);
+                element.focus();
+                element.select();
+
+                try {
+                    document.execCommand("selectAll", false, null);
+                } catch (err) {
+                    console.error("Unable to select text", err);
+                }
             }
 
+
             function copyOutput() {
-            var outputText = document.getElementById("outputText");
-            selectText(outputText);
-            document.execCommand("copy");
-           
+                var outputText = document.getElementById("outputText");
+
+                outputText.select();
+
+                try {
+                    document.execCommand("copy");
+                    console.log("Text copied to clipboard");
+                } catch (err) {
+                    console.error("Unable to copy text to clipboard", err);
+                }
+
+                window.getSelection().removeAllRanges();
             }
+
         </script>
     </main>
 </body>
