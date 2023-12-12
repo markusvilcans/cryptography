@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="./styles.css">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
 </head>
+
 <body>
     <main>
         <div class="container">
@@ -20,12 +22,21 @@
                     <div class="input-container">
                         <textarea id="key" required="" placeholder="Enter secret key"></textarea>
                     </div>
+                    <div class="switch-container">
+                        <h3 class="text p-r-5">Block encryption</h3>
+                        <label class="switch">
+                            <input id="switch" type="checkbox" onclick="switchFunction()">
+                            <span class="slider"></span>
+                        </label>
+                        <h3 class="text p-l-5">Full encryption</h3>
+                    </div>
                     <div>
                         <button type="button" class="btn" onclick="encryptMessage()">Encrypt</button>
                         <button type="button" class="btn" onclick="decryptMessage()">Decrypt</button>
                     </div>
                     <div class="input-container">
-                        <textarea id="outputText" readonly required="" placeholder="Output" onclick="selectText(this)"></textarea>
+                        <textarea id="outputText" readonly required="" placeholder="Output"
+                                  onclick="selectText(this)"></textarea>
                     </div>
                     <button type="button" class="btn" onclick="copyOutput()">Copy</button>
                 </form>
@@ -33,80 +44,96 @@
         </div>
 
         <script>
+            function switchFunction() {
+            var checkBox = document.getElementById("switch");
+
+            if (checkBox.checked == true) {
+            console.log("I'm turned on")
+            } else {
+            console.log("Ew get away creep")
+            }
+            }
+
             async function encryptMessage() {
-                const plaintext = document.getElementById("inputText").value;
-                const key = document.getElementById("key").value;
+            const plaintext = document.getElementById("inputText").value;
+            const key = document.getElementById("key").value;
+            const checkBox = document.getElementById("switch")
 
-                try {
-                    const response = await fetch('http://127.0.0.1:8000/encrypt', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            key: key,
-                            text: plaintext,
-                        }),
-                    });
+            try {
+            const response = await fetch('http://127.0.0.1:8000/encrypt', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+            key: key,
+            text: plaintext,
+            full_operation: checkBox.checked,
+            }),
+            });
 
-                    const data = await response.json();
-                    document.getElementById('outputText').value = data.value;
-                } catch (error) {
-                    console.error('Error encrypting message:', error);
-                }
+            const data = await response.json();
+            document.getElementById('outputText').value = data.value;
+            } catch (error) {
+            console.error('Error encrypting message:', error);
+            }
             }
 
             async function decryptMessage() {
-                const ciphertext = document.getElementById("inputText").value;
-                const key = document.getElementById("key").value;
+            const ciphertext = document.getElementById("inputText").value;
+            const key = document.getElementById("key").value;
+            const checkBox = document.getElementById("switch")
 
-                try {
-                    const response = await fetch('http://127.0.0.1:8000/decrypt', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            key: key,
-                            text: ciphertext,
-                        }),
-                    });
+            try {
+            const response = await fetch('http://127.0.0.1:8000/decrypt', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+            key: key,
+            text: ciphertext,
+            full_operation: checkBox.checked,
+            }),
+            });
 
-                    const data = await response.json();
-                    document.getElementById('outputText').value = data.value;
-                } catch (error) {
-                    console.error('Error decrypting message:', error);
-                }
+            const data = await response.json();
+            document.getElementById('outputText').value = data.value;
+            } catch (error) {
+            document.getElementById('outputText').value = "Malformed key";
+            console.error('Error decrypting message:', error);
+            }
             }
 
             function selectText(element) {
-                element.focus();
-                element.select();
+            element.focus();
+            element.select();
 
-                try {
-                    document.execCommand("selectAll", false, null);
-                } catch (err) {
-                    console.error("Unable to select text", err);
-                }
+            try {
+            document.execCommand("selectAll", false, null);
+            } catch (err) {
+            console.error("Unable to select text", err);
+            }
             }
 
 
             function copyOutput() {
-                var outputText = document.getElementById("outputText");
+            var outputText = document.getElementById("outputText");
 
-                outputText.select();
+            outputText.select();
 
-                try {
-                    document.execCommand("copy");
-                    console.log("Text copied to clipboard");
-                } catch (err) {
-                    console.error("Unable to copy text to clipboard", err);
-                }
+            try {
+            document.execCommand("copy");
+            console.log("Text copied to clipboard");
+            } catch (err) {
+            console.error("Unable to copy text to clipboard", err);
+            }
 
-                window.getSelection().removeAllRanges();
+            window.getSelection().removeAllRanges();
             }
 
         </script>
     </main>
 </body>
+
 </html>
